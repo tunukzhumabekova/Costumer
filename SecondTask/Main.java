@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+    private static Product[] product1;
+
     public static void main(String[] args) {
-        Product product1 = new Product("Shampoo", "Personal Care", 5, 50, LocalDate.of(2023, 8, 1),false);
+        Product product1 = new Product("Shampoo", "Personal Care", 5, 50, LocalDate.of(2023, 8, 1), false);
         Product product2 = new Product("Beer", "Beverages", 8, 20, LocalDate.of(2023, 8, 10), true);
         Product product3 = new Product("Chips", "Snacks", 2, 100, LocalDate.of(2023, 7, 10), false);
         Product product4 = new Product("Wine", "Alcohol", 25, 30, LocalDate.of(2024, 12, 1), true);
@@ -16,7 +18,7 @@ public class Main {
         Product product8 = new Product("Chocolate", "Snacks", 1, 200, LocalDate.of(2023, 6, 10), false);
         Product product9 = new Product("Water", "Beverages", 1, 1000, LocalDate.of(2023, 7, 30), false);
 
-        Product[] products0 = { product1,product2, product3};
+        Product[] products0 = {product2, product3};
         Product[] products1 = {product4, product5, product6};
         Product[] products2 = {product7, product8, product9};
 
@@ -29,19 +31,19 @@ public class Main {
         Bank bank2 = new Bank("XYZ Bank", "password456", 50000);
         Bank bank3 = new Bank("First Bank", "mybank789", 75000);
 
-        Costumer costumer=new Costumer("Frank",passport1,products0,bank1);
-        Costumer costumer1=new Costumer("Lima",passport2,products1,bank2);
-        Costumer costumer2=new Costumer("Grace",passport3,products2,bank3);
-Costumer []costumers={costumer,costumer1,costumer2};
-DataBase dataBase=new DataBase(costumers);
-switchCaseDemo(dataBase);
+        Costumer costumer = new Costumer("Frank", passport1, products0, bank1);
+        Costumer costumer1 = new Costumer("Lima", passport2, products1, bank2);
+        Costumer costumer2 = new Costumer("Grace", passport3, products2, bank3);
+        Costumer[] costumers = {costumer, costumer1, costumer2};
+        DataBase dataBase = new DataBase(costumers);
+        switchCaseDemo(dataBase, costumer, costumer1);
     }
 
-    public static void switchCaseDemo(DataBase dataBase) {
+    public static void switchCaseDemo(DataBase dataBase, Costumer costumer, Costumer costumer1) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-        do {
+        while(true) {
             System.out.println("1. Get all customer products");
             System.out.println("2. Add product");
             System.out.println("3. Delete product by name");
@@ -60,22 +62,33 @@ switchCaseDemo(dataBase);
                     String customerName = scanner.nextLine();
                     System.out.println(Arrays.toString(dataBase.getAllCostumerProducts(customerName)));
                     break;
+
                 case 2:
                     System.out.println("Enter customer name:");
                     String customerNameToAddProduct = scanner.nextLine();
+                    Product newProduct = new Product("New Product", "Category", 10, 50, LocalDate.now(), false);
+                    String addResult = dataBase.addProduct(customerNameToAddProduct, newProduct);
+                    System.out.println("Add product result: " + addResult);
                     break;
+
                 case 3:
                     System.out.println("Enter customer name:");
                     String customerNameToDeleteProduct = scanner.nextLine();
                     System.out.println("Enter product name:");
                     String productNameToDelete = scanner.nextLine();
+                    String deleteResult = dataBase.deleteProductByName(customerNameToDeleteProduct, productNameToDelete);
+                    System.out.println("Delete product result: " + deleteResult);
                     break;
+
                 case 4:
                     System.out.println("Enter customer name:");
                     String customerNameToUpdate = scanner.nextLine();
                     System.out.println("Enter new customer name:");
                     String newCustomerName = scanner.nextLine();
+                    Costumer updateResult = dataBase.updateCostumerByName(customerNameToUpdate, newCustomerName);
+                    System.out.println("Update customer result: " + updateResult);
                     break;
+
                 case 5:
                     System.out.println("Enter bank name:");
                     String bankName = scanner.nextLine();
@@ -84,36 +97,40 @@ switchCaseDemo(dataBase);
                     System.out.println("Enter payment amount:");
                     double paymentAmount = scanner.nextDouble();
                     scanner.nextLine();
+                    String paymentResult = dataBase.payment(bankName, bankPassword, paymentAmount);
+                    System.out.println("Payment result: " + paymentResult);
                     break;
+
                 case 6:
                     System.out.println("Enter bank password:");
                     String bankPasswordForCredit = scanner.nextLine();
                     System.out.println("Enter credit amount:");
                     double creditAmount = scanner.nextDouble();
-                    scanner.nextLine();
-
+                    costumer.credit(bankPasswordForCredit, creditAmount);
+                    System.out.println("Credit added successfully.");
                     break;
+
                 case 7:
                     System.out.println("Enter product name:");
                     String productToCheck = scanner.nextLine();
-                    break;
+                    String checkResult = costumer1.checkProduct(costumer1.getProducts());
+                    System.out.println("Product check result: " + checkResult);
+
+
+
+                break;
+
                 case 8:
                     System.out.println("Exiting...");
                     break;
+
                 default:
                     System.out.println("Invalid choice.");
                     break;
             }
-        } while (choice != 8);
 
-        scanner.close();
-    }
-
-
-
-
-
-
+        }
+        }
 
     }
 

@@ -52,7 +52,7 @@ public class Costumer {
 
 
 
-    public void credit (String password,int sum) {
+    public void credit (String password,double sum) {
         if (password.equals(banks.getPassword())) {
             System.out.println("Вам выдан кредит в размере:" + sum);
         } else {
@@ -60,7 +60,7 @@ public class Costumer {
         }
 
 
-    }  String checkProduct(Product[]products) {
+    }  String checkProduct(Product[] products) {
         for (int i = 0; i < products.length; i++) {
             Period prosrochka = Period.between(products[i].getMadeInDate(), LocalDate.of(2023, 9, 11));
             if (prosrochka.getMonths() >= 3) {

@@ -87,7 +87,7 @@ public class DataBase {
 
 
 
-    } String payment(String name, String password,int sum){
+    } String payment(String name, String password,double sum){
             for (int i = 0; i < costumers.length; i++) {
                 if (costumers[i].getBanks().getName().equals(name)) {
                     if (costumers[i].getBanks().getPassword() == password) {
